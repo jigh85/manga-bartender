@@ -64,11 +64,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         {/* 추천 감정 섹션 */}
         <View style={styles.emotionSection}>
           <Text style={styles.sectionTitle}>추천 감정</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={styles.emotionScroll}
-          >
+          <View style={styles.emotionGrid}>
             {EMOTIONS.slice(0, 5).map((emotion) => (
               <TouchableOpacity
                 key={emotion.id}
@@ -79,7 +75,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
                 <Text style={styles.emotionName}>{emotion.name}</Text>
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </View>
         </View>
 
         {/* 추천 만화 섹션 */}
@@ -150,14 +146,14 @@ const styles = StyleSheet.create({
   emotionSection: {
     marginBottom: 28,
   },
-  emotionScroll: {
-    marginHorizontal: -16,
-    paddingHorizontal: 16,
+  emotionGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
   },
   emotionCard: {
-    width: 70,
-    height: 90,
-    marginRight: 12,
+    flex: 1,
+    aspectRatio: 1,
     backgroundColor: Colors.barWood,
     borderRadius: 12,
     justifyContent: 'center',
@@ -166,11 +162,11 @@ const styles = StyleSheet.create({
     borderColor: Colors.accent,
   },
   emotionEmoji: {
-    fontSize: 28,
+    fontSize: 24,
     marginBottom: 6,
   },
   emotionName: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '600',
     color: Colors.darkGray,
     textAlign: 'center',

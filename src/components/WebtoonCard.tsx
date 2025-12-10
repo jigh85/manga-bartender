@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
 
   // 이미지 영역
   imageWrapper: {
-    height: 160,
+    height: 220,
     backgroundColor: Colors.barWood,
     position: 'relative',
     overflow: 'hidden',
@@ -115,12 +115,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   placeholderIcon: {
-    fontSize: 56,
+    fontSize: 80,
   },
 
   // 정보 영역
   infoSection: {
-    padding: 14,
+    padding: 12,
   },
   headerRow: {
     flexDirection: 'row',
