@@ -29,8 +29,8 @@
 
 /* React Native 웹 컨테이너 - 아이폰 크기 적용 */
 #root > div {
-  width: 292.5px;
-  height: 651px;
+  width: 195px;
+  height: 434px;
   max-width: 100vw;
   max-height: 100vh;
   background: #0F0F0F;

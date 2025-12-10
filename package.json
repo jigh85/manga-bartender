@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build": "expo export --platform web && node -e \"const fs = require('fs'); fs.copyFileSync('public/_redirects', 'dist/_redirects'); const splashHtml = fs.readFileSync('dist/onboarding/splash.html', 'utf8'); fs.writeFileSync('dist/index.html', splashHtml); fs.writeFileSync('dist/404.html', splashHtml);\"",
+    "build": "expo export --platform web",
     "build:web": "expo export --platform web",
     "lint": "expo lint"
   },
