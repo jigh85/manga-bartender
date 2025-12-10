@@ -6,11 +6,9 @@ import {
   SafeAreaView,
   ScrollView,
   FlatList,
-  TouchableOpacity,
 } from 'react-native';
 import { Colors } from '@/src/constants/colors';
 import { MOCK_WEBTOONS } from '@/src/constants/mockData';
-import { EMOTIONS } from '@/src/constants/emotions';
 import { WebtoonCard } from '@/src/components/WebtoonCard';
 
 interface HomeScreenProps {
@@ -52,37 +50,43 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
       <ScrollView 
         style={styles.content}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
       >
         {/* 헤더 섹션 */}
         <View style={styles.header}>
-          <Text style={styles.greeting}>안녕하세요! 👋</Text>
-          <Text style={styles.mainTitle}>당신을 위한 만화</Text>
-          <Text style={styles.subTitle}>감정에 맞춘 맞춤형 큐레이션</Text>
+          <View style={styles.headerTop}>
+            <View>
+              <Text style={styles.timeGreeting}>안녕하세요! 👋</Text>
+              <Text style={styles.userName}>오늘의 감정은?</Text>
+            </View>
+          </View>
         </View>
 
-        {/* 추천 감정 섹션 */}
+        {/* 감정 필터 섹션 */}
         <View style={styles.emotionSection}>
-          <Text style={styles.sectionTitle}>추천 감정</Text>
-          <View style={styles.emotionGrid}>
-            {EMOTIONS.slice(0, 5).map((emotion) => (
-              <TouchableOpacity
-                key={emotion.id}
-                style={styles.emotionCard}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.emotionEmoji}>{emotion.emoji}</Text>
-                <Text style={styles.emotionName}>{emotion.name}</Text>
-              </TouchableOpacity>
+          <Text style={styles.sectionLabel}>추천 감정</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.emotionScroll}
+          >
+            {['위로', '설렘', '자극', '웃음', '여운'].map((emotion) => (
+              <View key={emotion} style={styles.emotionCard}>
+                <Text style={styles.emotionCardEmoji}>
+                  {emotion === '위로' && '🌙'}
+                  {emotion === '설렘' && '✨'}
+                  {emotion === '자극' && '⚡'}
+                  {emotion === '웃음' && '😄'}
+                  {emotion === '여운' && '🎭'}
+                </Text>
+                <Text style={styles.emotionCardText}>{emotion}</Text>
+              </View>
             ))}
-          </View>
+          </ScrollView>
         </View>
 
         {/* 추천 만화 섹션 */}
         <View style={styles.webtoonSection}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>추천 컨텐츠</Text>
-          </View>
+          <Text style={styles.sectionLabel}>바텐더의 추천</Text>
           <FlatList
             data={filteredWebtoons}
             renderItem={({ item }) => (
@@ -110,50 +114,55 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
   },
   content: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingHorizontal: 16,
-    paddingTop: 24,
-    paddingBottom: 40,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
   },
   
   // 헤더 섹션
   header: {
-    marginBottom: 28,
+    backgroundColor: Colors.background,
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 20,
   },
-  greeting: {
-    fontSize: 14,
-    color: Colors.gold,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
-  mainTitle: {
-    fontSize: 32,
-    fontWeight: '800',
-    color: Colors.darkGray,
-    lineHeight: 40,
-    marginBottom: 6,
-  },
-  subTitle: {
-    fontSize: 14,
-    color: Colors.gray,
-    fontWeight: '400',
-    lineHeight: 20,
-  },
-  
-  // 추천 감정 섹션
-  emotionSection: {
-    marginBottom: 28,
-  },
-  emotionGrid: {
+  headerTop: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 10,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  timeGreeting: {
+    fontSize: 16,
+    color: Colors.gold,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  userName: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: Colors.darkGray,
+  },
+  
+  // 감정 섹션
+  emotionSection: {
+    paddingHorizontal: 20,
+    marginVertical: 20,
+  },
+  sectionLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: Colors.darkGray,
+    marginBottom: 12,
+    letterSpacing: 0.3,
+  },
+  emotionScroll: {
+    marginHorizontal: -20,
+    paddingHorizontal: 20,
   },
   emotionCard: {
-    flex: 1,
-    aspectRatio: 1,
+    width: 70,
+    height: 70,
+    marginRight: 10,
     backgroundColor: Colors.barWood,
     borderRadius: 12,
     justifyContent: 'center',
@@ -161,12 +170,12 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     borderColor: Colors.accent,
   },
-  emotionEmoji: {
+  emotionCardEmoji: {
     fontSize: 24,
-    marginBottom: 6,
+    marginBottom: 4,
   },
-  emotionName: {
-    fontSize: 10,
+  emotionCardText: {
+    fontSize: 11,
     fontWeight: '600',
     color: Colors.darkGray,
     textAlign: 'center',
@@ -174,13 +183,7 @@ const styles = StyleSheet.create({
   
   // 만화 섹션
   webtoonSection: {
-  },
-  sectionHeader: {
-    marginBottom: 18,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '800',
-    color: Colors.darkGray,
+    paddingHorizontal: 20,
+    marginBottom: 40,
   },
 });
