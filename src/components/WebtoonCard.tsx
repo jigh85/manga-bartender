@@ -79,11 +79,7 @@ export const WebtoonCard: React.FC<WebtoonCardProps> = ({
             <TouchableOpacity style={styles.actionButton}>
               <Ionicons name="share-social-outline" size={16} color={Colors.accent} />
             </TouchableOpacity>
-            <View style={styles.actionButtonSpacer} />
-            <TouchableOpacity style={styles.readButton}>
-              <Text style={styles.readButtonText}>읽기</Text>
-              <Ionicons name="chevron-forward" size={14} color={Colors.background} />
-            </TouchableOpacity>
+
           </View>
         </View>
       </View>
@@ -196,21 +192,5 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
     paddingHorizontal: 10,
   },
-  actionButtonSpacer: {
-    flex: 1,
-  },
-  readButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.accent,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    gap: 4,
-  },
-  readButtonText: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: Colors.background,
-  },
+
 });

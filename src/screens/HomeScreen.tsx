@@ -63,7 +63,6 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
         <View style={styles.webtoonSection}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>추천 컨텐츠</Text>
-            <Text style={styles.sectionCount}>{filteredWebtoons.length}</Text>
           </View>
           <FlatList
             data={filteredWebtoons}
@@ -122,25 +121,11 @@ const styles = StyleSheet.create({
   webtoonSection: {
   },
   sectionHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     marginBottom: 18,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: '800',
     color: Colors.darkGray,
-  },
-  sectionCount: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: Colors.gold,
-    backgroundColor: Colors.barDark,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: Colors.accent,
   },
 });
