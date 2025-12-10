@@ -61,6 +61,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           </View>
         </View>
 
+        {/* 구분선 */}
+        <View style={styles.divider} />
+
         {/* 감정 필터 섹션 */}
         <View style={styles.emotionSection}>
           <Text style={styles.sectionLabel}>추천 감정</Text>
@@ -83,6 +86,9 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             ))}
           </ScrollView>
         </View>
+
+        {/* 구분선 */}
+        <View style={styles.divider} />
 
         {/* 추천 만화 섹션 */}
         <View style={styles.webtoonSection}>
@@ -118,12 +124,21 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
   },
   
+  // 구분선
+  divider: {
+    height: 1,
+    backgroundColor: Colors.barWood,
+    marginHorizontal: 20,
+    marginVertical: 8,
+    opacity: 0.5,
+  },
+  
   // 헤더 섹션
   header: {
     backgroundColor: Colors.background,
     paddingHorizontal: 20,
     paddingTop: 16,
-    paddingBottom: 20,
+    paddingBottom: 12,
   },
   headerTop: {
     flexDirection: 'row',
@@ -146,7 +161,7 @@ const styles = StyleSheet.create({
   // 감정 섹션
   emotionSection: {
     paddingHorizontal: 20,
-    marginVertical: 20,
+    paddingVertical: 12,
   },
   sectionLabel: {
     fontSize: 16,
@@ -184,6 +199,7 @@ const styles = StyleSheet.create({
   // 만화 섹션
   webtoonSection: {
     paddingHorizontal: 20,
-    marginBottom: 40,
+    paddingVertical: 12,
+    paddingBottom: 40,
   },
 });
