@@ -6,9 +6,11 @@ import {
   SafeAreaView,
   ScrollView,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import { Colors } from '@/src/constants/colors';
 import { MOCK_WEBTOONS } from '@/src/constants/mockData';
+import { EMOTIONS } from '@/src/constants/emotions';
 import { WebtoonCard } from '@/src/components/WebtoonCard';
 
 interface HomeScreenProps {
@@ -57,6 +59,27 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
           <Text style={styles.greeting}>안녕하세요! 👋</Text>
           <Text style={styles.mainTitle}>당신을 위한 만화</Text>
           <Text style={styles.subTitle}>감정에 맞춘 맞춤형 큐레이션</Text>
+        </View>
+
+        {/* 추천 감정 섹션 */}
+        <View style={styles.emotionSection}>
+          <Text style={styles.sectionTitle}>추천 감정</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.emotionScroll}
+          >
+            {EMOTIONS.slice(0, 5).map((emotion) => (
+              <TouchableOpacity
+                key={emotion.id}
+                style={styles.emotionCard}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.emotionEmoji}>{emotion.emoji}</Text>
+                <Text style={styles.emotionName}>{emotion.name}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
 
         {/* 추천 만화 섹션 */}
@@ -115,6 +138,42 @@ const styles = StyleSheet.create({
     color: Colors.darkGray,
     lineHeight: 40,
     marginBottom: 6,
+  },
+  subTitle: {
+    fontSize: 14,
+    color: Colors.gray,
+    fontWeight: '400',
+    lineHeight: 20,
+  },
+  
+  // 추천 감정 섹션
+  emotionSection: {
+    marginBottom: 28,
+  },
+  emotionScroll: {
+    marginHorizontal: -16,
+    paddingHorizontal: 16,
+  },
+  emotionCard: {
+    width: 70,
+    height: 90,
+    marginRight: 12,
+    backgroundColor: Colors.barWood,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: Colors.accent,
+  },
+  emotionEmoji: {
+    fontSize: 28,
+    marginBottom: 6,
+  },
+  emotionName: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: Colors.darkGray,
+    textAlign: 'center',
   },
   
   // 만화 섹션
