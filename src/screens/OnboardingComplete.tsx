@@ -18,19 +18,21 @@ export const OnboardingComplete: React.FC<OnboardingCompleteProps> = ({
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <View style={styles.successContainer}>
-          <Text style={styles.icon}>✨</Text>
-          <Text style={styles.title}>추천 준비 완료!</Text>
-        </View>
+        <View style={styles.contentCenter}>
+          <View style={styles.successContainer}>
+            <Text style={styles.icon}>✨</Text>
+            <Text style={styles.title}>추천 준비 완료!</Text>
+          </View>
 
-        <Text style={styles.subtitle}>
-          선택하신 감정과 장르를 기반으로 맞춤 큐레이션을 준비했어요.
-        </Text>
-
-        <View style={styles.messageContainer}>
-          <Text style={styles.message}>
-            이제 홈 화면에서 당신의 취향에 맞는 만화를 만나보세요.
+          <Text style={styles.subtitle}>
+            선택하신 감정과 장르를 기반으로 맞춤 큐레이션을 준비했어요.
           </Text>
+
+          <View style={styles.messageContainer}>
+            <Text style={styles.message}>
+              이제 홈 화면에서 당신의 취향에 맞는 만화를 만나보세요.
+            </Text>
+          </View>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -51,9 +53,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+  },
+  contentCenter: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
   },
   successContainer: {
     alignItems: 'center',
@@ -78,21 +85,22 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     marginVertical: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    backgroundColor: Colors.barDark,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    backgroundColor: Colors.barWood,
     borderRadius: 8,
-    borderLeftWidth: 1,
+    borderLeftWidth: 3,
     borderLeftColor: Colors.accent,
   },
   message: {
     fontSize: 14,
-    color: Colors.darkGray,
+    color: Colors.gold,
     textAlign: 'center',
     lineHeight: 20,
+    fontStyle: 'italic',
   },
   buttonContainer: {
-    marginTop: 40,
-    width: '100%',
+    marginTop: 0,
   },
 });
+

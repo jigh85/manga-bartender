@@ -12,20 +12,31 @@ import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { EMOTIONS } from '@/src/constants/emotions';
 
 interface OnboardingEmotionProps {
-  onNext: (emotion: string) => void;
+  onNext: (emotions: string[]) => void;
 }
 
 export const OnboardingEmotion: React.FC<OnboardingEmotionProps> = ({
   onNext,
 }) => {
-  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+  const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
+
+  const toggleEmotion = (emotion: string) => {
+    setSelectedEmotions((prev) =>
+      prev.includes(emotion)
+        ? prev.filter((e) => e !== emotion)
+        : [...prev, emotion]
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>지금 당신의 기분은 어떤가요?</Text>
+        {/* 진행 단계 표시 */}
+        <Text style={styles.stepIndicator}>1 / 2</Text>
+        
+        <Text style={styles.title}>당신의 기분을 선택하세요</Text>
         <Text style={styles.subtitle}>
-          맞춤 큐레이션을 위해 현재 감정을 선택해주세요
+          여러 개를 선택할 수 있습니다
         </Text>
 
         <View style={styles.emotionContainer}>
@@ -33,8 +44,8 @@ export const OnboardingEmotion: React.FC<OnboardingEmotionProps> = ({
             <EmotionButton
               key={emotion}
               label={emotion}
-              isSelected={selectedEmotion === emotion}
-              onPress={() => setSelectedEmotion(emotion)}
+              isSelected={selectedEmotions.includes(emotion)}
+              onPress={() => toggleEmotion(emotion)}
             />
           ))}
         </View>
@@ -42,11 +53,16 @@ export const OnboardingEmotion: React.FC<OnboardingEmotionProps> = ({
         <View style={styles.buttonContainer}>
           <PrimaryButton
             label="다음으로 →"
-            onPress={() => onNext(selectedEmotion!)}
-            disabled={!selectedEmotion}
+            onPress={() => onNext(selectedEmotions)}
+            disabled={selectedEmotions.length === 0}
           />
         </View>
       </ScrollView>
+
+      {/* 진행 상황 표시기 - 하단 */}
+      <View style={styles.progressContainer}>
+        <View style={[styles.progressBar, { width: '50%' }]} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -56,9 +72,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
+  progressContainer: {
+    height: 6,
+    backgroundColor: Colors.barWood,
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: Colors.accent,
+  },
   content: {
+    flexGrow: 1,
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 30,
+    justifyContent: 'space-between',
+  },
+  stepIndicator: {
+    fontSize: 14,
+    color: Colors.accent,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    letterSpacing: 0.5,
   },
   title: {
     fontSize: 24,
@@ -78,9 +113,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginBottom: 60,
+    marginBottom: 40,
   },
   buttonContainer: {
-    marginTop: 20,
+    marginTop: 0,
+    marginHorizontal: 0,
   },
 });

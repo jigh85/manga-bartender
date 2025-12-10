@@ -12,18 +12,29 @@ import { PrimaryButton } from '@/src/components/PrimaryButton';
 import { GENRES } from '@/src/constants/emotions';
 
 interface OnboardingGenreProps {
-  onNext: (genre: string) => void;
+  onNext: (genres: string[]) => void;
 }
 
 export const OnboardingGenre: React.FC<OnboardingGenreProps> = ({ onNext }) => {
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+
+  const toggleGenre = (genre: string) => {
+    setSelectedGenres((prev) =>
+      prev.includes(genre)
+        ? prev.filter((g) => g !== genre)
+        : [...prev, genre]
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.title}>오늘은 어떤 이야기가 끌리나요?</Text>
+        {/* 진행 단계 표시 */}
+        <Text style={styles.stepIndicator}>2 / 2</Text>
+        
+        <Text style={styles.title}>좋아하는 장르를 선택하세요</Text>
         <Text style={styles.subtitle}>
-          선호하는 장르를 선택하면 맞춤 추천을 시작합니다
+          여러 개를 선택할 수 있습니다
         </Text>
 
         <View style={styles.genreContainer}>
@@ -31,8 +42,8 @@ export const OnboardingGenre: React.FC<OnboardingGenreProps> = ({ onNext }) => {
             <EmotionButton
               key={genre}
               label={genre}
-              isSelected={selectedGenre === genre}
-              onPress={() => setSelectedGenre(genre)}
+              isSelected={selectedGenres.includes(genre)}
+              onPress={() => toggleGenre(genre)}
             />
           ))}
         </View>
@@ -40,11 +51,16 @@ export const OnboardingGenre: React.FC<OnboardingGenreProps> = ({ onNext }) => {
         <View style={styles.buttonContainer}>
           <PrimaryButton
             label="추천 준비 완료"
-            onPress={() => onNext(selectedGenre!)}
-            disabled={!selectedGenre}
+            onPress={() => onNext(selectedGenres)}
+            disabled={selectedGenres.length === 0}
           />
         </View>
       </ScrollView>
+
+      {/* 진행 상황 표시기 - 하단 */}
+      <View style={styles.progressContainer}>
+        <View style={[styles.progressBar, { width: '100%' }]} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -54,9 +70,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.background,
   },
+  progressContainer: {
+    height: 6,
+    backgroundColor: Colors.barWood,
+    overflow: 'hidden',
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: Colors.accent,
+  },
   content: {
+    flexGrow: 1,
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 30,
+    justifyContent: 'space-between',
+  },
+  stepIndicator: {
+    fontSize: 14,
+    color: Colors.accent,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    letterSpacing: 0.5,
   },
   title: {
     fontSize: 24,
@@ -76,9 +111,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginBottom: 60,
+    marginBottom: 40,
   },
   buttonContainer: {
-    marginTop: 20,
+    marginTop: 0,
+    marginHorizontal: 0,
   },
 });

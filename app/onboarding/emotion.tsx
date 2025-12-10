@@ -5,8 +5,8 @@ import { storage, StorageKeys } from '@/src/utils/storage';
 export default function EmotionScreen() {
   const router = useRouter();
 
-  const handleNext = async (emotion: string) => {
-    await storage.setItem(StorageKeys.USER_EMOTION, emotion);
+  const handleNext = async (emotions: string[]) => {
+    await storage.setItem(StorageKeys.USER_EMOTION, emotions.join(','));
     router.push('/onboarding/genre');
   };
 

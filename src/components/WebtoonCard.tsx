@@ -21,7 +21,7 @@ export const WebtoonCard: React.FC<WebtoonCardProps> = ({
   onPress,
 }) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.85}>
       <View style={styles.cardContent}>
         {/* 이미지 영역 */}
         <View style={styles.imageWrapper}>
@@ -44,42 +44,46 @@ export const WebtoonCard: React.FC<WebtoonCardProps> = ({
                 {emotion === '자극' && '⚡'}
                 {emotion === '웃음' && '😄'}
                 {emotion === '여운' && '🎭'}
+                {emotion === '감동' && '💫'}
+                {emotion === '설움' && '😢'}
+                {emotion === '분노' && '🔥'}
+                {emotion === '고요함' && '🌊'}
+                {emotion === '설레임' && '🎉'}
               </Text>
             </View>
           </View>
 
           {/* 큐레이터 정보 */}
           <View style={styles.curatorSection}>
-            <View style={styles.curatorBadge}>
-              <Text style={styles.curatorBadgeIcon}>👤</Text>
+            <View style={styles.curatorIcon}>
+              <Text>👤</Text>
             </View>
             <Text style={styles.curator}>{curator}</Text>
           </View>
 
           {/* 추천 코멘트 */}
           <View style={styles.commentSection}>
-            <View style={styles.commentIcon}>
-              <Text style={styles.commentIconText}>💬</Text>
-            </View>
             <Text style={styles.comment} numberOfLines={2}>
-              {comment}
+              "{comment}"
             </Text>
           </View>
 
           {/* 액션 버튼 */}
           <View style={styles.actionBar}>
-            <View style={styles.actionButton}>
-              <Ionicons name="heart-outline" size={18} color={Colors.accent} />
-              <Text style={styles.actionText}>추천</Text>
-            </View>
-            <View style={styles.actionButton}>
-              <Ionicons name="bookmark-outline" size={18} color={Colors.accent} />
-              <Text style={styles.actionText}>저장</Text>
-            </View>
-            <View style={styles.actionButton}>
-              <Ionicons name="share-social-outline" size={18} color={Colors.accent} />
-              <Text style={styles.actionText}>공유</Text>
-            </View>
+            <TouchableOpacity style={styles.actionButton}>
+              <Ionicons name="heart-outline" size={16} color={Colors.accent} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionButton}>
+              <Ionicons name="bookmark-outline" size={16} color={Colors.accent} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionButton}>
+              <Ionicons name="share-social-outline" size={16} color={Colors.accent} />
+            </TouchableOpacity>
+            <View style={styles.actionButtonSpacer} />
+            <TouchableOpacity style={styles.readButton}>
+              <Text style={styles.readButtonText}>읽기</Text>
+              <Ionicons name="chevron-forward" size={14} color={Colors.background} />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -90,30 +94,23 @@ export const WebtoonCard: React.FC<WebtoonCardProps> = ({
 const styles = StyleSheet.create({
   card: {
     marginBottom: 16,
-    borderRadius: 16,
+    borderRadius: 14,
     overflow: 'hidden',
   },
   cardContent: {
     backgroundColor: Colors.barDark,
-    borderWidth: 1.5,
-    borderColor: Colors.accent,
-    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.barWood,
+    borderRadius: 14,
     overflow: 'hidden',
-    shadowColor: Colors.accent,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 6,
   },
 
   // 이미지 영역
   imageWrapper: {
-    height: 180,
+    height: 160,
     backgroundColor: Colors.barWood,
     position: 'relative',
     overflow: 'hidden',
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.accent,
   },
   imagePlaceholder: {
     flex: 1,
@@ -133,7 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 12,
+    marginBottom: 10,
     gap: 10,
   },
   title: {
@@ -146,12 +143,13 @@ const styles = StyleSheet.create({
   emotionTag: {
     width: 36,
     height: 36,
-    borderRadius: 18,
+    borderRadius: 10,
     backgroundColor: Colors.barWood,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: Colors.accent,
+    flexShrink: 0,
   },
   emotionIcon: {
     fontSize: 18,
@@ -162,20 +160,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-    gap: 8,
+    gap: 6,
   },
-  curatorBadge: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: Colors.barWood,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: Colors.accent,
-  },
-  curatorBadgeIcon: {
-    fontSize: 14,
+  curatorIcon: {
+    fontSize: 12,
   },
   curator: {
     fontSize: 12,
@@ -185,25 +173,9 @@ const styles = StyleSheet.create({
 
   // 코멘트 섹션
   commentSection: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
     marginBottom: 12,
-    gap: 8,
-  },
-  commentIcon: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: Colors.barWood,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 2,
-  },
-  commentIconText: {
-    fontSize: 12,
   },
   comment: {
-    flex: 1,
     fontSize: 12,
     color: Colors.gray,
     fontStyle: 'italic',
@@ -213,25 +185,32 @@ const styles = StyleSheet.create({
   // 액션 바
   actionBar: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingTop: 12,
-    borderTopWidth: 1,
+    alignItems: 'center',
+    paddingTop: 10,
+    borderTopWidth: 0.5,
     borderTopColor: Colors.barWood,
-    marginTop: 12,
+    marginTop: 10,
+    gap: 12,
   },
   actionButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  actionButtonSpacer: {
+    flex: 1,
+  },
+  readButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: Colors.accent,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    gap: 6,
-    flex: 1,
     borderRadius: 8,
+    gap: 4,
   },
-  actionText: {
-    fontSize: 11,
-    color: Colors.accent,
-    fontWeight: '600',
+  readButtonText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: Colors.background,
   },
 });

@@ -5,8 +5,8 @@ import { storage, StorageKeys } from '@/src/utils/storage';
 export default function GenreScreen() {
   const router = useRouter();
 
-  const handleNext = async (genre: string) => {
-    await storage.setItem(StorageKeys.USER_GENRE, genre);
+  const handleNext = async (genres: string[]) => {
+    await storage.setItem(StorageKeys.USER_GENRE, genres.join(','));
     router.push('/onboarding/complete');
   };
 
